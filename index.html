@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OclusSense — Férula Inteligente para Bruxismo</title>
+  <meta name="description" content="OclusSense es una férula inteligente que combina protección dental con estimulación neuromuscular para reducir dolor, contractura muscular y mejorar tu sueño." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="OclusSense — Férula Inteligente para Bruxismo" />
+  <meta property="og:description" content="No solo protege tus dientes. Relaja tu mandíbula, elimina el dolor y mejora tu sueño." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦷</text></svg>" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========== VARIABLES ========== */
+    :root {
+      --purple:       #6B21A8;
+      --purple-light: #9333EA;
+      --purple-dark:  #4A1772;
+      --purple-mist:  #F3E8FF;
+      --orange:       #F97316;
+      --orange-light: #FED7AA;
+      --white:        #FFFFFF;
+      --off-white:    #FAFAF9;
+      --gray-100:     #F5F3F7;
+      --gray-300:     #D1C8DC;
+      --gray-500:     #7C6D8A;
+      --gray-800:     #1E0A2E;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --radius:       16px;
+      --radius-lg:    28px;
+      --shadow:       0 4px 24px rgba(107, 33, 168, 0.10);
+      --shadow-hover: 0 12px 40px rgba(107, 33, 168, 0.22);
+    }
+
+    /* ========== RESET ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--gray-800);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ========== UTILITY ========== */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section { padding: 80px 0; }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--gray-800);
+    }
+    .section-title span { color: var(--purple-light); }
+
+    /* ========== WHATSAPP BUTTON ========== */
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 6px 24px rgba(249, 115, 22, 0.35);
+      text-align: center;
+    }
+    .btn-wa:hover {
+      background: #ea6a0a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(249, 115, 22, 0.45);
+    }
+    .btn-wa:active { transform: translateY(0); }
+    .btn-wa.large {
+      font-size: 18px;
+      padding: 20px 44px;
+    }
+    @media (max-width: 600px) {
+      .btn-wa { width: 100%; justify-content: center; }
+    }
+
+    /* ========== NAVBAR ========== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-300);
+      padding: 14px 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--purple);
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-cta {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--purple);
+      border: 2px solid var(--purple);
+      padding: 8px 20px;
+      border-radius: 100px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--purple); color: var(--white); }
+
+    /* ========== HERO ========== */
+    #hero {
+      background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 60%, #7C3AED 100%);
+      padding: 96px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--orange-light);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 7vw, 64px);
+      font-weight: 800;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--orange-light);
+    }
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+    .hero-urgency {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange-light);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .hero-urgency::before { content: '⚡'; font-size: 16px; }
+
+    /* ========== PROBLEMA ========== */
+    #problema {
+      background: var(--white);
+    }
+    .problema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-top: 48px;
+    }
+    .problema-text p {
+      color: var(--gray-500);
+      font-size: 17px;
+      margin-bottom: 16px;
+    }
+    .problema-text p strong { color: var(--gray-800); }
+    .problema-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pain-card {
+      background: var(--gray-100);
+      border-left: 4px solid var(--purple-light);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .pain-card.visible { opacity: 1; transform: translateX(0); }
+    .pain-icon { font-size: 24px; flex-shrink: 0; }
+    .pain-card h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .pain-card p { font-size: 14px; color: var(--gray-500); }
+    @media (max-width: 700px) {
+      .problema-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ========== BENEFICIOS ========== */
+    #beneficios { background: var(--gray-100); }
+    .beneficios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .benefit-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .benefit-card.visible { opacity: 1; transform: translateY(0); }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+    .benefit-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    .benefit-card h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--gray-800);
+    }
+    .benefit-card p { font-size: 14px; color: var(--gray-500); }
+    .beneficios-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    /* ========== CÓMO FUNCIONA ========== */
+    #como-funciona { background: var(--white); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+      position: relative;
+    }
+    .step {
+      text-align: center;
+      padding: 32px 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .step.visible { opacity: 1; transform: translateY(0); }
+    .step-number {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--purple), var(--purple-light));
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+    .step p { font-size: 14px; color: var(--gray-500); }
+
+    /* ========== TESTIMONIOS ========== */
+    #testimonios {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      padding: 80px 0;
+    }
+    .testimonios-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .testimonial-quote {
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .testimonial-quote::before { content: '"'; font-size: 40px; color: var(--orange); line-height: 0; vertical-align: -14px; margin-right: 6px; }
+    .testimonial-quote::after  { content: '"'; font-size: 40px; color: var(--orange); line-height: 0; vertical-align: -14px; margin-left: 6px; }
+    .testimonial-stars { color: var(--orange); font-size: 20px; letter-spacing: 2px; }
+
+    /* ========== FAQ ========== */
+    #faq { background: var(--gray-100); }
+    .faq-list {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+    .faq-question:hover { color: var(--purple); }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      background: var(--purple-mist);
+      color: var(--purple);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--purple);
+      color: var(--white);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s;
+      padding: 0 24px;
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding: 0 24px 20px;
+    }
+
+    /* ========== PRECIO ========== */
+    #precio { background: var(--white); }
+    .precio-card {
+      background: linear-gradient(135deg, var(--purple-mist), #EDE9FE);
+      border: 2px solid var(--purple-light);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      max-width: 520px;
+      margin: 48px auto 0;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(107,33,168,0.12);
+    }
+    .precio-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .precio-range {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 800;
+      color: var(--purple-dark);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .precio-note {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin-bottom: 24px;
+    }
+    .precio-tag {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 100px;
+    }
+
+    /* ========== CTA FINAL ========== */
+    #cta-final {
+      background: var(--gray-100);
+      text-align: center;
+      padding: 96px 0;
+    }
+    #cta-final .section-title { margin-bottom: 12px; }
+    #cta-final p {
+      color: var(--gray-500);
+      font-size: 17px;
+      margin-bottom: 36px;
+    }
+    .urgency-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange-light);
+      color: #9a3412;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 100px;
+      margin-top: 20px;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--gray-800);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 40px 24px;
+      font-size: 14px;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .footer-logo span { color: var(--orange); }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.55);
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 12px; opacity: 0.45; margin-top: 12px; }
+
+    /* ========== SCROLL REVEAL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <div class="container nav-inner">
+    <div class="nav-logo">Oclus<span>Sense</span></div>
+    <a class="nav-cta"
+       href="https://wa.me/524491099884?text=Hola%2C%20me%20interesa%20OclusSense.%20Me%20gustar%C3%ADa%20registrarme%20en%20la%20lista%20de%20espera."
+       target="_blank" rel="noopener">
+      📋 Lista de espera
+    </a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">🦷 Férula inteligente · Smoke Test</div>
+      <h1 class="hero-title">
+        Duerme sin<br><em>dolor de mandíbula.</em>
+      </h1>
+      <p class="hero-sub">
+        OclusSense protege tus dientes <strong style="color:#fff;">y</strong> relaja tu musculatura con tecnología de sensores y microestimulación. La guarda que tu dentista no conocía.
+      </p>
+      <a class="btn-wa large"
+         href="https://wa.me/524491099884?text=Hola%2C%20me%20interesa%20OclusSense.%20Me%20gustar%C3%ADa%20registrarme%20en%20la%20lista%20de%20espera."
+         target="_blank" rel="noopener">
+        📱 Quiero probar OclusSense
+      </a>
+      <div class="hero-urgency">
+        Primeros 30 pacientes con precio especial de lanzamiento
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EL PROBLEMA ===== -->
+<section id="problema" class="section">
+  <div class="container">
+    <div class="section-label">El problema</div>
+    <h2 class="section-title">Las guardas tradicionales<br><span>solo hacen la mitad</span> del trabajo</h2>
+    <div class="problema-grid">
+      <div class="problema-text">
+        <p>Si tienes bruxismo, tensión mandibular o despertar con dolor de cabeza, probablemente ya usas una guarda nocturna. <strong>Pero eso no es suficiente.</strong></p>
+        <p>Las guardas convencionales protegen el esmalte del desgaste, pero no abordan la <strong>causa real del dolor</strong>: la musculatura contraída que trabaja toda la noche mientras duermes.</p>
+        <p>El resultado: sigues amaneciendo con mandíbula tensa, cefaleas y malestar en la articulación temporomandibular (ATM). Una y otra vez.</p>
+      </div>
+      <div class="problema-cards">
+        <div class="pain-card">
+          <div class="pain-icon">😣</div>
+          <div>
+            <h4>Dolor al despertar</h4>
+            <p>Mandíbula rígida, cabeza pesada y sensación de no haber descansado.</p>
+          </div>
+        </div>
+        <div class="pain-card" style="transition-delay:0.1s">
+          <div class="pain-icon">🦷</div>
+          <div>
+            <h4>Desgaste dental progresivo</h4>
+            <p>El rechinamiento nocturno erosiona el esmalte sin que lo notes.</p>
+          </div>
+        </div>
+        <div class="pain-card" style="transition-delay:0.2s">
+          <div class="pain-icon">🧠</div>
+          <div>
+            <h4>Cefaleas frecuentes</h4>
+            <p>La tensión muscular crónica genera dolores de cabeza recurrentes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BENEFICIOS ===== -->
+<section id="beneficios" class="section">
+  <div class="container">
+    <div class="section-label">Beneficios</div>
+    <h2 class="section-title">Todo lo que OclusSense<br><span>hace por ti</span></h2>
+    <div class="beneficios-grid">
+      <div class="benefit-card" style="transition-delay:0s">
+        <div class="benefit-icon">🛡️</div>
+        <h3>Protección dental</h3>
+        <p>Blinda tu esmalte del desgaste causado por el rechinamiento nocturno.</p>
+      </div>
+      <div class="benefit-card" style="transition-delay:0.08s">
+        <div class="benefit-icon">⚡</div>
+        <h3>Relajación muscular</h3>
+        <p>Vibración neuromuscular suave que descarga la tensión mientras duermes.</p>
+      </div>
+      <div class="benefit-card" style="transition-delay:0.16s">
+        <div class="benefit-icon">💊</div>
+        <h3>Menos dolor y cefaleas</h3>
+        <p>Reduce el dolor mandibular y los dolores de cabeza desde las primeras semanas.</p>
+      </div>
+      <div class="benefit-card" style="transition-delay:0.24s">
+        <div class="benefit-icon">📡</div>
+        <h3>Sensores inteligentes</h3>
+        <p>Detectan el apretamiento en tiempo real y activan la respuesta de relajación.</p>
+      </div>
+      <div class="benefit-card" style="transition-delay:0.32s">
+        <div class="benefit-icon">😴</div>
+        <h3>Sueño sin molestias</h3>
+        <p>Diseño ligero y personalizado que no interrumpe tu descanso.</p>
+      </div>
+    </div>
+    <div class="beneficios-cta">
+      <a class="btn-wa"
+         href="https://wa.me/524491099884?text=Hola%2C%20me%20interesa%20OclusSense.%20Me%20gustar%C3%ADa%20registrarme%20en%20la%20lista%20de%20espera."
+         target="_blank" rel="noopener">
+        📱 Quiero probar OclusSense
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CÓMO FUNCIONA ===== -->
+<section id="como-funciona" class="section">
+  <div class="container">
+    <div class="section-label">Proceso</div>
+    <h2 class="section-title reveal">¿Cómo funciona<br><span>OclusSense?</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Valoración inicial</h3>
+        <p>Tu odontólogo evalúa tu mordida, musculatura y patrón de bruxismo para personalizar la férula.</p>
+      </div>
+      <div class="step" style="transition-delay:0.1s">
+        <div class="step-number">2</div>
+        <h3>Fabricación personalizada</h3>
+        <p>OclusSense se fabrica a medida con los sensores y nivel de tecnología adecuado para tu caso.</p>
+      </div>
+      <div class="step" style="transition-delay:0.2s">
+        <div class="step-number">3</div>
+        <h3>Úsala cada noche</h3>
+        <p>La colocas al dormir. Los sensores detectan el apretamiento y activan la microestimulación relajante.</p>
+      </div>
+      <div class="step" style="transition-delay:0.3s">
+        <div class="step-number">4</div>
+        <h3>Reportes y seguimiento</h3>
+        <p>Genera reportes de tu actividad nocturna para que tú y tu odontólogo vean el progreso real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIOS ===== -->
+<section id="testimonios">
+  <div class="container">
+    <p class="testimonios-title">Lo que dicen nuestros primeros pacientes</p>
+    <div class="testimonial-card reveal">
+      <p class="testimonial-quote">Desde que uso OclusSense ya no despierto con dolor de mandíbula ni dolor de cabeza.</p>
+      <div class="testimonial-stars">★★★★★</div>
+      <p style="color:rgba(255,255,255,0.5); font-size:13px; margin-top:12px;">— Paciente piloto · Monterrey, NL</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title reveal">Preguntas<br><span>frecuentes</span></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">
+          ¿Es incómodo usarla?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">No, OclusSense está diseñada para ser ligera y totalmente personalizada a tu mordida. La mayoría de pacientes se adaptan en los primeros días.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          ¿Reemplaza una guarda tradicional?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">Sí. OclusSense ofrece la misma protección contra el desgaste dental que una guarda convencional, y además añade relajación muscular activa.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          ¿Necesita mantenimiento?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">Sí, requiere limpieza diaria con los productos adecuados y revisiones periódicas con tu odontólogo para verificar el funcionamiento de los sensores.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRECIO ===== -->
+<section id="precio" class="section">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Inversión</div>
+    <h2 class="section-title reveal" style="text-align:center">Precio<br><span>estimado</span></h2>
+    <div class="precio-card reveal">
+      <div class="precio-label">Rango de inversión</div>
+      <div class="precio-range">$3,500 — $6,000</div>
+      <div class="precio-note">MXN · Según nivel de personalización y tecnología incluida</div>
+      <div class="precio-tag">⚡ Precio especial para los primeros 30 pacientes</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section id="cta-final">
+  <div class="container">
+    <div class="section-label">Lista de espera</div>
+    <h2 class="section-title reveal">¿Listo para<br><span>dormir sin dolor?</span></h2>
+    <p class="reveal">Regístrate hoy en la lista de espera y sé de los primeros en acceder a OclusSense con precio de lanzamiento.</p>
+    <a class="btn-wa large"
+       href="https://wa.me/524491099884?text=Hola%2C%20me%20interesa%20OclusSense.%20Me%20gustar%C3%ADa%20registrarme%20en%20la%20lista%20de%20espera."
+       target="_blank" rel="noopener">
+      📱 Quiero probar OclusSense
+    </a>
+    <div>
+      <span class="urgency-badge">⚡ Primeros 30 pacientes · Precio especial de lanzamiento</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-logo">Oclus<span>Sense</span></div>
+  <div class="footer-links">
+    <a href="mailto:contacto@oclussense.com">✉️ contacto@oclussense.com</a>
+    <a href="https://instagram.com/OclusSense" target="_blank" rel="noopener">📸 @OclusSense</a>
+    <a href="https://wa.me/524491099884?text=Hola%2C%20me%20interesa%20OclusSense.%20Me%20gustar%C3%ADa%20registrarme%20en%20la%20lista%20de%20espera." target="_blank" rel="noopener">💬 WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2025 OclusSense · Equipo OclusSense · Todos los derechos reservados</div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // Scroll Reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(
+    '.pain-card, .benefit-card, .step, .reveal'
+  ).forEach(el => observer.observe(el));
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+
+      // Close all FAQ items
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+      // Toggle clicked item
+      if (!isOpen) {
+        item.classList.add('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
